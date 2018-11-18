@@ -1,19 +1,15 @@
 #!/usr/bin/env python
 
-import logging
-log = logging.getLogger(__name__)
 import argparse
 import importlib.util
 import os
 import subprocess
 import warnings
-import re
 
 from fdfgen import forge_fdf
 
-from dungeonsheets import character, exceptions
+from dungeonsheets import character
 from dungeonsheets.stats import mod_str
-
 
 """Program to take character definitions and build a PDF of the
 character sheet."""
@@ -44,19 +40,6 @@ def load_character_file(filename):
     module_name, ext = os.path.splitext(fname)
     if ext != '.py':
         raise ValueError(f"Character definition {filename} is not a python file.")
-    # Check if this file contains the version string
-    version_re = re.compile('dungeonsheets_version\s*=\s*[\'"]([0-4.]+)[\'"]')
-    with open(filename, mode='r') as f:
-        version = None
-        for line in f:
-            match = version_re.match(line)
-            if match:
-                version = match.group(1)
-                break
-        if version is None:
-            # Not a valid DND character file
-            raise exceptions.CharacterFileFormatError(
-                "No ``dungeonsheets_version = `` entry.")
     # Import the module to extract the information
     spec = importlib.util.spec_from_file_location('module', filename)
     module = importlib.util.module_from_spec(spec)
@@ -84,37 +67,24 @@ def create_spellbook_pdf(character, basename):
     tex_file = f'{basename}.tex'
     with open(tex_file, mode='w') as f:
         f.write(tex)
-    # Convenience function for removing temporary files
-    def remove_temp_files(basename_):
-        filenames = [f'{basename_}.tex', f'{basename_}.aux',
-                     f'{basename_}.log']
-        for filename in filenames:
-            if os.path.exists(filename):
-                os.remove(filename)
     # Compile the PDF
     pdf_file = f'{basename}.pdf'
-    output_dir = os.path.abspath(os.path.dirname(pdf_file))
-    try:
-        result = subprocess.run(['pdflatex', '--output-directory',
-                                  output_dir, tex_file, '-halt-on-error'],
-                                 stdout=subprocess.DEVNULL, timeout=10)
-    except FileNotFoundError:
-        # Remove temporary files
-        remove_temp_files(basename)
-        raise exceptions.LatexNotFoundError()
-    else:
-        if result.returncode == 0:
-            remove_temp_files(basename)
-        else:
-            raise exceptions.LatexError(f'Processing of {basename}.tex failed.')
+    result = subprocess.call(['pdflatex', tex_file], stdout=subprocess.DEVNULL)
+    # Remove temporary files
+    if result == 0:
+        os.remove(tex_file)
+        os.remove(f'{basename}.aux')
+        os.remove(f'{basename}.log')
 
 
 def create_spells_pdf(character, basename, flatten=False):
     class_level = (character.class_name + ' ' + str(character.level))
     spell_level = lambda x : (x or '')
+    sc_ab = getattr(character,character.spellcasting_ability)
     fields = [
         ('Spellcasting Class 2', class_level),
-        ("SpellcastingAbility 2", character.spellcasting_ability.capitalize()),
+        # ("SpellcastingAbility 2", character.spellcasting_ability.capitalize()),
+        ("SpellcastingAbility 2", sc_ab.modifier),
         ('SpellSaveDC  2', character.spell_save_dc),
         ('SpellAtkBonus 2', mod_str(character.spell_attack_bonus)),
         # Number of spell slots
@@ -279,10 +249,7 @@ def create_character_pdf(character, basename, flatten=False):
     }
     # Add skill proficienies
     for skill in character.skill_proficiencies:
-        try:
-            fields.append((skill_boxes[skill.replace(' ', '_').lower()], 'Yes'))
-        except KeyError:
-            raise KeyError(f"Unknown skill: '{skill}'")
+        fields.append((skill_boxes[skill.replace(' ', '_')], 'Yes'))
     # Add weapons
     weapon_fields = [('Wpn Name', 'Wpn1 AtkBonus', 'Wpn1 Damage'),
                      ('Wpn Name 2', 'Wpn2 AtkBonus ', 'Wpn2 Damage '),
@@ -351,13 +318,8 @@ def make_sheet(character_file, flatten=False):
         sheets.append(spell_base + '.pdf')
         # Create spell book
         spellbook_base = os.path.splitext(character_file)[0] + '_spellbook'
-        try:
-            create_spellbook_pdf(character=char, basename=spellbook_base)
-        except exceptions.LatexNotFoundError as e:
-            log.warning('``pdflatex`` not available. Skipping spellbook '
-                        f'for {char.name}')
-        else:
-            sheets.append(spellbook_base + '.pdf')
+        create_spellbook_pdf(character=char, basename=spellbook_base)
+        sheets.append(spellbook_base + '.pdf')
     # Combine sheets into final pdf
     final_pdf = os.path.splitext(character_file)[0] + '.pdf'
     popenargs = ('pdftk', *sheets, 'cat', 'output', final_pdf)
@@ -385,11 +347,6 @@ def main():
         print(f"Processing {os.path.splitext(filename)[0]}...", end='')
         try:
             make_sheet(character_file=filename, flatten=(not args.editable))
-        except exceptions.CharacterFileFormatError as e:
-            # Only raise the failed exception if this file is explicitly given
-            print('invalid')
-            if args.filename:
-                raise
         except Exception as e:
             print('failed')
             raise

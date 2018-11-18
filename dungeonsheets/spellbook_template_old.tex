@@ -19,7 +19,7 @@
   [% elif spl.level == 0 %]
     {
   [% else %]
-    {\color{black}
+    {\color{mygrey}
   [% endif %]
 
   \section*{[[ spl.name ]]}
@@ -36,7 +36,7 @@
   \noindent
   \textbf{Casting Time:} [[ spl.casting_time ]] \\
   \textbf{Range:} [[ spl.casting_range ]] \\
-  \textbf{Components:} [[ spl.components ]] \\
+  \textbf{Components:} [[ spl.component_string() ]] \\
   \textbf{Duration:} [[ spl.duration ]]
 
   [[ spl.__doc__ ]]

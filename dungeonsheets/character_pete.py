@@ -328,7 +328,7 @@ class Bard(Character):
                            'Perception', 'Performance', 'Persuasion', 'Religion',
                            'Sleight of Hand', 'Stealth', 'Survival')
     num_skill_choices = 3
-    spellcasting_ability = 'wisdom'
+    spellcasting_ability = 'charisma'
     spell_slots_by_level = {
         1:  (2, 2, 0, 0, 0, 0, 0, 0, 0, 0),
         2:  (2, 3, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -351,7 +351,6 @@ class Bard(Character):
         19: (4, 4, 3, 3, 3, 3, 2, 1, 1, 1),
         20: (4, 4, 3, 3, 3, 3, 2, 2, 1, 1),
     }
-    
 
 
 class Cleric(Character):
@@ -363,6 +362,30 @@ class Cleric(Character):
     weapon_proficiencies = weapons.simple_weapons
     class_skill_choices = ('History', 'Insight', 'Medicine',
                            'Persuasion', 'Religion')
+    spellcasting_ability = 'wisdom'
+    spell_slots_by_level = {
+        # char_lvl: (cantrips, 1st, 2nd, 3rd, ...)
+        1:  (3, 2, 0, 0, 0, 0, 0, 0, 0, 0),
+        2:  (3, 3, 0, 0, 0, 0, 0, 0, 0, 0),
+        3:  (3, 4, 2, 0, 0, 0, 0, 0, 0, 0),
+        4:  (4, 4, 3, 0, 0, 0, 0, 0, 0, 0),
+        5:  (4, 4, 3, 2, 0, 0, 0, 0, 0, 0),
+        6:  (4, 4, 3, 3, 0, 0, 0, 0, 0, 0),
+        7:  (4, 4, 3, 3, 1, 0, 0, 0, 0, 0),
+        8:  (4, 4, 3, 3, 2, 0, 0, 0, 0, 0),
+        9:  (4, 4, 3, 3, 3, 1, 0, 0, 0, 0),
+        10: (5, 4, 3, 3, 3, 2, 0, 0, 0, 0),
+        11: (5, 4, 3, 3, 3, 2, 1, 0, 0, 0),
+        12: (5, 4, 3, 3, 3, 2, 1, 0, 0, 0),
+        13: (5, 4, 3, 3, 3, 2, 1, 1, 0, 0),
+        14: (5, 4, 3, 3, 3, 2, 1, 1, 0, 0),
+        15: (5, 4, 3, 3, 3, 2, 1, 1, 1, 0),
+        16: (5, 4, 3, 3, 3, 2, 1, 1, 1, 0),
+        17: (5, 4, 3, 3, 3, 2, 1, 1, 1, 1),
+        18: (5, 4, 3, 3, 3, 3, 1, 1, 1, 1),
+        19: (5, 4, 3, 3, 3, 3, 2, 1, 1, 1),
+        20: (5, 4, 3, 3, 3, 3, 2, 2, 1, 1),
+    }
 
 
 class Druid(Character):
@@ -403,11 +426,12 @@ class Druid(Character):
         20: (4, 4, 3, 3, 3, 3, 2, 2, 1, 1),
     }
 
+
 class Fighter(Character):
     class_name = 'Fighter'
     hit_dice_faces = 10
     saving_throw_proficiencies = ('strength', 'constitution')
-    _proficiencies_text = ('All armar', 'shields', 'simple weapons', 'martial weapons')
+    _proficiencies_text = ('All armor', 'shields', 'simple weapons', 'martial weapons')
     weapon_proficiencies = weapons.simple_weapons + weapons.martial_weapons
     class_skill_choices = ('Acrobatics', 'Animal Handling',
                            'Athletics', 'History', 'Insight', 'Intimidation', 'Perception',
@@ -433,6 +457,30 @@ class Paladin(Character):
     weapon_proficiencies = weapons.simple_weapons + weapons.martial_weapons
     class_skill_choices = ("Athletics", 'Insight', 'Intimidation',
                            'Medicine', 'Persuasion', 'Religion')
+    spellcasting_ability = 'charisma'
+    spell_slots_by_level = {
+        # char_lvl: (cantrips, 1st, 2nd, 3rd, ...)
+        1:  (0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        2:  (0, 2, 0, 0, 0, 0, 0, 0, 0, 0),
+        3:  (0, 3, 0, 0, 0, 0, 0, 0, 0, 0),
+        4:  (0, 3, 0, 0, 0, 0, 0, 0, 0, 0),
+        5:  (0, 4, 2, 0, 0, 0, 0, 0, 0, 0),
+        6:  (0, 4, 2, 0, 0, 0, 0, 0, 0, 0),
+        7:  (0, 4, 3, 0, 0, 0, 0, 0, 0, 0),
+        8:  (0, 4, 3, 0, 0, 0, 0, 0, 0, 0),
+        9:  (0, 4, 3, 2, 0, 0, 0, 0, 0, 0),
+        10: (0, 4, 3, 2, 0, 0, 0, 0, 0, 0),
+        11: (0, 4, 3, 3, 0, 0, 0, 0, 0, 0),
+        12: (0, 4, 3, 3, 0, 0, 0, 0, 0, 0),
+        13: (0, 4, 3, 3, 1, 0, 0, 0, 0, 0),
+        14: (0, 4, 3, 3, 1, 0, 0, 0, 0, 0),
+        15: (0, 4, 3, 3, 2, 0, 0, 0, 0, 0),
+        16: (0, 4, 3, 3, 2, 0, 0, 0, 0, 0),
+        17: (0, 4, 3, 3, 3, 1, 0, 0, 0, 0),
+        18: (0, 4, 3, 3, 3, 1, 0, 0, 0, 0),
+        19: (0, 4, 3, 3, 3, 2, 0, 0, 0, 0),
+        20: (0, 4, 3, 3, 3, 2, 0, 0, 0, 0),
+    }
 
 
 class Ranger(Character):
@@ -446,28 +494,30 @@ class Ranger(Character):
                            'Investigation', 'Nature', 'Perception', 'Stealth', 'Survival')
     num_skill_choices = 3
     spellcasting_ability = 'wisdom'
-    spell_slots_by_level = {    
+    spell_slots_by_level = {
+        # char_lvl: (cantrips, 1st, 2nd, 3rd, ...)
         1:  (0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-        2:  (2, 2, 0, 0, 0, 0, 0, 0, 0, 0),
-        3:  (3, 3, 0, 0, 0, 0, 0, 0, 0, 0),
-        4:  (3, 3, 0, 0, 0, 0, 0, 0, 0, 0),
-        5:  (4, 4, 2, 0, 0, 0, 0, 0, 0, 0),
-        6:  (4, 4, 2, 3, 0, 0, 0, 0, 0, 0),
-        7:  (5, 4, 3, 0, 0, 0, 0, 0, 0, 0),
-        8:  (5, 4, 3, 0, 0, 0, 0, 0, 0, 0),
-        9:  (6, 4, 3, 2, 0, 0, 0, 0, 0, 0),
-        10: (6, 4, 3, 2, 0, 0, 0, 0, 0, 0),
-        11: (7, 4, 3, 3, 0, 0, 0, 0, 0, 0),
-        12: (7, 4, 3, 3, 0, 0, 0, 0, 0, 0),
-        13: (8, 4, 3, 3, 1, 0, 0, 0, 0, 0),
-        14: (8, 4, 3, 3, 1, 0, 0, 0, 0, 0),
-        15: (9, 4, 3, 3, 2, 0, 0, 0, 0, 0),
-        16: (9, 4, 3, 3, 2, 0, 0, 0, 0, 0),
-        17: (10, 4, 3, 3, 3, 1, 0, 0, 0, 0),
-        18: (10, 4, 3, 3, 3, 1, 0, 0, 0, 0),
-        19: (11, 4, 3, 3, 3, 2, 0, 0, 0, 0),
-        20: (11, 4, 3, 3, 3, 2, 0, 0, 0, 0),
+        2:  (0, 2, 0, 0, 0, 0, 0, 0, 0, 0),
+        3:  (0, 3, 0, 0, 0, 0, 0, 0, 0, 0),
+        4:  (0, 3, 0, 0, 0, 0, 0, 0, 0, 0),
+        5:  (0, 4, 2, 0, 0, 0, 0, 0, 0, 0),
+        6:  (0, 4, 2, 0, 0, 0, 0, 0, 0, 0),
+        7:  (0, 4, 3, 0, 0, 0, 0, 0, 0, 0),
+        8:  (0, 4, 3, 0, 0, 0, 0, 0, 0, 0),
+        9:  (0, 4, 3, 2, 0, 0, 0, 0, 0, 0),
+        10: (0, 4, 3, 2, 0, 0, 0, 0, 0, 0),
+        11: (0, 4, 3, 3, 0, 0, 0, 0, 0, 0),
+        12: (0, 4, 3, 3, 0, 0, 0, 0, 0, 0),
+        13: (0, 4, 3, 3, 1, 0, 0, 0, 0, 0),
+        14: (0, 4, 3, 3, 1, 0, 0, 0, 0, 0),
+        15: (0, 4, 3, 3, 2, 0, 0, 0, 0, 0),
+        16: (0, 4, 3, 3, 2, 0, 0, 0, 0, 0),
+        17: (0, 4, 3, 3, 3, 1, 0, 0, 0, 0),
+        18: (0, 4, 3, 3, 3, 1, 0, 0, 0, 0),
+        19: (0, 4, 3, 3, 3, 2, 0, 0, 0, 0),
+        20: (0, 4, 3, 3, 3, 2, 0, 0, 0, 0),
     }
+
 
 class Rogue(Character):
     class_name = 'Rogue'
@@ -482,6 +532,43 @@ class Rogue(Character):
                            'Insight', 'Intimidation', 'Investigation', 'Perception',
                            'Performance', 'Persuasion', 'Sleight of Hand', 'Stealth')
 
+#class ArcaneTrickster(Character):
+#    class_name = 'ArcaneTrickster'
+#    hit_dice_faces = 8
+#    saving_throw_proficiencies = ('dexterity', 'intelligence')
+#    _proficiencies_text = (
+#        'light armor', 'simple weapons', 'hand crossbows', 'longswords',
+#        'rapiers', 'shortswords', "thieves' tools")
+#    weapon_proficiencies = (weapons.HandCrossbow, weapons.Longsword,
+#                           weapons.Rapier, weapons.Shortsword) + weapons.simple_weapons
+#    class_skill_choices = ('Acrobatics', 'Athletics', 'Deception',
+#                           'Insight', 'Intimidation', 'Investigation', 'Perception',
+#                           'Performance', 'Persuasion', 'Sleight of Hand', 'Stealth')
+#    spellcasting_ability = 'intelligence'
+#    spell_slots_by_level = {
+#        # char_lvl: (cantrips, 1st, 2nd, 3rd, ...)
+#        1:  (0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+#        2:  (0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+#        3:  (3, 2, 0, 0, 0, 0, 0, 0, 0, 0),
+#        4:  (3, 3, 0, 0, 0, 0, 0, 0, 0, 0),
+#        5:  (3, 3, 0, 0, 0, 0, 0, 0, 0, 0),
+#        6:  (3, 3, 0, 0, 0, 0, 0, 0, 0, 0),
+#        7:  (3, 4, 2, 0, 0, 0, 0, 0, 0, 0),
+#        8:  (3, 4, 2, 0, 0, 0, 0, 0, 0, 0),
+#        9:  (3, 4, 2, 0, 0, 0, 0, 0, 0, 0),
+#        10: (4, 4, 3, 0, 0, 0, 0, 0, 0, 0),
+#        11: (4, 4, 3, 0, 0, 0, 0, 0, 0, 0),
+#        12: (4, 4, 3, 0, 0, 0, 0, 0, 0, 0),
+#        13: (4, 4, 3, 2, 0, 0, 0, 0, 0, 0),
+#        14: (4, 4, 3, 2, 0, 0, 0, 0, 0, 0),
+#        15: (4, 4, 3, 2, 0, 0, 0, 0, 0, 0),
+#        16: (4, 4, 3, 3, 0, 0, 0, 0, 0, 0),
+#        17: (4, 4, 3, 3, 0, 0, 0, 0, 0, 0),
+#        18: (4, 4, 3, 3, 0, 0, 0, 0, 0, 0),
+#        19: (4, 4, 3, 3, 1, 0, 0, 0, 0, 0),
+#        20: (4, 4, 3, 3, 1, 0, 0, 0, 0, 0),
+#    }
+
 
 class Sorceror(Character):
     class_name = 'Sorceror'
@@ -495,7 +582,8 @@ class Sorceror(Character):
     class_skill_choices = ('Arcana', 'Deception', 'Insight',
                            'Intimidation' ,'Persuasion', 'Religion')
     spellcasting_ability = 'charisma'
-    spell_slots_by_level = {    
+    spell_slots_by_level = {
+        # char_lvl: (cantrips, 1st, 2nd, 3rd, ...)
         1:  (4, 2, 0, 0, 0, 0, 0, 0, 0, 0),
         2:  (4, 3, 0, 0, 0, 0, 0, 0, 0, 0),
         3:  (4, 4, 2, 0, 0, 0, 0, 0, 0, 0),
@@ -517,6 +605,7 @@ class Sorceror(Character):
         19: (6, 4, 3, 3, 3, 3, 2, 1, 1, 1),
         20: (6, 4, 3, 3, 3, 3, 2, 2, 1, 1),
     }
+
 
 class Warlock(Character):
     class_name = 'Warlock'

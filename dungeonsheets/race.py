@@ -4,7 +4,7 @@ from . import weapons
 __all__ = ('Dwarf', 'HillDwarf', 'MountainDwarf', 'Elf', 'HighElf',
            'WoodElf', 'DarkElf', 'Halfling', 'LightfootHalfling',
            'StoutHalfling', 'Human', 'Dragonborn', 'Gnome', 'ForestGnome',
-           'RockGnome', 'HalfElf', 'HalfOrc', 'Tiefling')
+           'RockGnome', 'HalfElf', 'HalfOrc', 'Tiefling','Firbolg')
 
 
 class Race():
@@ -176,3 +176,16 @@ class Tiefling(Race):
     intelligence_bonus = 1
     charisma_bonus = 2
     languages = ("Common", "Infernal")
+
+# Firbolg
+class Firbolg(Race):                                                           
+    name = "Firbolg"
+    size = "medium"
+    speed = 30
+    wisdom_bonus = 2
+    strength_bonus = 1
+    # weapon_proficiencies = (weapons.Longsword, weapons.Shortsword,           
+    #                        weapons.Shortbow, weapons.Longbow)                
+    # proficiencies_text = ('longswords', 'shortswords', 'shortbows', 'longbows')
+    # intelligence_bonus = 1                                                   
+    languages = ('Common', 'Elvish', 'Giant') 

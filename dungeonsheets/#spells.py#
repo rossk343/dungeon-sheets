@@ -856,7 +856,7 @@ You can blind or deafen a foe. Choose one creature that you can see within range
 When you cast this spell using a spell slot of 3rd level or higher, you can target one additional creature for each slot level above 2nd.
 """
 
-	name = "Blindness Deafness"
+	name = "BlindnesDeafness"
 	level = 2
 	castin_time = " 1 Action "
 	casting_range = " 30 feet "
@@ -3051,7 +3051,7 @@ Reduce
 The targets size is halved in all dimensions, and its weight is reduced to one-eighth of normal. This reduction decreases its size by one category  from Medium to Small, for example. Until the spell ends, the target also has disadvantage on Strength checks and Strength saving throws. The targets weapons also shrink to match its new size. While these weapons are reduced, the targets attacks with them deal 1d4 less damage (this cant reduce the damage below 1).
 """
 
-	name = "Enlarge Reduce"
+	name = "Enlarge/Reduce"
 	level = 2
 	castin_time = " 1 Action "
 	casting_range = " 30 feet "
